@@ -2,7 +2,7 @@
 A PlayStation Vita port of Insaniquarium! Deluxe.
 Not affiliated with PopCap, EA or Sony.
 
-Credit to kyle-sylvestre for the [Android version](https://github.com/kyle-sylvestre/WinFish) of the game, which is a fork off of Vindirect's original WinFin decompilation. This build acts as a loader for the libmain.so library from the Android v0.1 release, adding custom button mappings. Future bug fix development for the PlayStation Vita version of the game will be separate to keep code/asset files as efficient as possible.
+Credit to kyle-sylvestre for the [Android](https://github.com/kyle-sylvestre/WinFish) version of the game, which is a fork off of Vindirect's original WinFin decompilation. This build acts as a loader for the libmain.so library from the Android v0.1 release, adding custom button mappings. Future bug fix development for the PlayStation Vita version of the game will be separate to keep code/asset files as efficient as possible.
 
 This repository contains **no game files**. You need your own copy of the game.
 
