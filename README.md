@@ -54,7 +54,7 @@ WARNING: Do not attempt to open the keyboard while the game is paused. This caus
 - Opening the keyboard (via D-PAD UP) while the game is paused causes a softlock.
 - `FIXED` The Guppy death sound and Breeder death animation didn't load.
 
-## <u>Fun Extras for Advanced Users</u>
+## <ins>Fun Extras for Advanced Users</ins>
 
 ## Optional Settings
 Create a file at `ux0:data/insaniquarium/loader.cfg` to change values.
