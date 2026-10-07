@@ -28,7 +28,6 @@ This repository contains **no game files**. You need your own copy of the game.
 - Have fun! The game will play at 36 fps without overclocking.
   
   
-
 ## Controls & Features
 | Vita | Game |
 |---|---|
