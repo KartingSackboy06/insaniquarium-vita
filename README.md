@@ -56,16 +56,7 @@ WARNING: Do not attempt to open the keyboard while the game is paused. This caus
 
 ## <ins>Fun Extras for Advanced Users</ins>
 
-## Build Information
-Requires Docker. From the project folder:
-
-    ./build.sh                    # release build -> build/InsaniquariumVita.vpk
-    LOADER_DEBUG=ON ./build.sh    # same, with verbose diagnostics in log.txt
-
-`build.sh` rebuilds vitaGL from source (pinned commit, `NO_SPLASHSCREEN=1`) so the vitaGL logo does not appear.
-The version number lives in one place, `LOADER_VERSION` in `CMakeLists.txt`.
-
-## Optional Settings
+# Optional Settings
 Create a file at `ux0:data/insaniquarium/loader.cfg` to change values.
 One `key=value` per line. Every value that is applied is echoed in `log.txt`.
 Default values for each key values are shown on the right.
@@ -82,7 +73,7 @@ Default values for each key values are shown on the right.
     skip_intro=0               (1 skips the videos)
     intro_volume=100           intro_audio_buffer=117     intro_bgm=0
 
-## Source Layout
+# Source Layout
     src/main.c          startup, fake JNIEnv, game thread, watchdog
     src/so_util.c       ELF loader + relocator (kubridge for executable memory)
     src/wrappers.c      bionic -> newlib shims, SDL event/pad handling, quit button
@@ -92,7 +83,7 @@ Default values for each key values are shown on the right.
     src/unwind_hook.c   lets the C++ unwinder find libmain.so's exception tables
     src/import_table.c  generated from imports.txt by tools/gen_import_table.py
 
-## Troubleshooting
+# Troubleshooting
 `ux0:data/insaniquarium/log.txt` is rewritten on every run. A crash is logged with addresses relative to the 
 library (`lib+...`) so it can be looked up in `libmain.so`. Failed file opens are logged; build with `LOADER_DEBUG=ON`
 for the full trace, per-second video status and a memory/fps heartbeat.
@@ -100,3 +91,12 @@ for the full trace, per-second video status and a memory/fps heartbeat.
 `ux0:data/insaniquarium/log.txt` is rewritten on every run. A crash is logged with addresses relative to the library
 (`lib+...`) so it can be looked up in `libmain.so`. Failed file opens are logged; build with `LOADER_DEBUG=ON` for
 the full trace, per-second video status and a memory/fps heartbeat.
+
+# Build Information
+Requires Docker. From the project folder:
+
+    ./build.sh                    # release build -> build/InsaniquariumVita.vpk
+    LOADER_DEBUG=ON ./build.sh    # same, with verbose diagnostics in log.txt
+
+`build.sh` rebuilds vitaGL from source (pinned commit, `NO_SPLASHSCREEN=1`) so the vitaGL logo does not appear.
+The version number lives in one place, `LOADER_VERSION` in `CMakeLists.txt`.
