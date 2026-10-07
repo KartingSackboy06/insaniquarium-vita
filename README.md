@@ -14,6 +14,7 @@ Plays the PopCap (and optional SOE) intro videos on launch. The first line of `l
 - A Vita with HENkaku and [kubridge](https://github.com/bythos14/kubridge) installed, and `libshacccg.suprx`
   (needed by vitaGL's runtime shader compiler).
 - The game's data files in `ux0:data/insaniquarium/` on the Vita (`properties/`, `images/`, ...).
+- You must own your own copy of Insaniquarium! Deluxe. The easiest way to copy the assets over is to download the game through Steam, find your entire folder, and transfer the folder into ux0:data. Rename the folder "insaniquarium" and you're good to go.
 
 ## Controls
 | Vita | Game |
