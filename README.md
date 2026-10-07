@@ -14,7 +14,20 @@ Plays the PopCap (and optional SOE) intro videos on launch. The first line of `l
 - A Vita with HENkaku and [kubridge](https://github.com/bythos14/kubridge) installed, and `libshacccg.suprx`
   (needed by vitaGL's runtime shader compiler).
 - The game's data files in `ux0:data/insaniquarium/` on the Vita (`properties/`, `images/`, ...).
-- You must own your own copy of Insaniquarium! Deluxe. The easiest way to copy the assets over is to download the game through Steam, find the game folder, and transfer the folder into ux0:data. Rename the folder "insaniquarium" and you're good to go.
+- You must own your own copy of Insaniquarium! Deluxe.
+
+## Installation Instructions
+- Download InsaniquariumVita.vpk from the releases page.
+- Install the VPK using VitaShell.
+- Find the Insanquarium! Deluxe folder on your PC/Mac.
+  On Mac the path is: '/Users/***/Library/Application Support/Steam/steamapps/common/Insaniquarium Deluxe'
+  On PC the path is: 'C:\Program Files (x86)\Steam\steamapps\common\Insaniquarium Deluxe'
+- Copy the folder to your PS Vita using a FTP or USB transfer into 'ux0:data/'
+- Rename the folder to 'insaniquarium'
+  Note: not all of files are required, but the total size is 13.7MB so it's convenient to copy it all.
+- Have fun! The game will play at 36 fps without overclocking.
+
+
 
 ## Controls
 | Vita | Game |
