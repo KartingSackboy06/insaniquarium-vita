@@ -51,7 +51,7 @@ WARNING: Do not attempt to open the keyboard while the game is paused. This caus
 
 ### Known Glitches:
 - Opening the keyboard (via D-PAD UP) while the game is paused causes a softlock.
-- `FIXED` The Guppy death sound and Breeder death animation didn't load.
+- `SOLVED` The Guppy death sound and Breeder death animation didn't load.
 
 # <ins>Fun Extras for Advanced Users</ins>
 
