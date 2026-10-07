@@ -1,5 +1,6 @@
 # Insaniquarium Vita
 A PlayStation Vita port of Insaniquarium! Deluxe.
+
 Not affiliated with PopCap, EA or Sony.
 
 Loads the Android `libmain.so` (armeabi-v7a) of Insaniquarium directly on a PS Vita: maps it into memory,
@@ -42,6 +43,7 @@ This repository contains **no game files**. You need your own copy of the game.
 | START | Pauses the game. Linked to "space" |
 | D-PAD UP | Hold down to open the keyboard. (Hold for at least 1500ms) |
 | CHEATS | Enter with ALL LOWERCASE letters using the keyboard. |
+
 WARNING: Do not attempt to open the keyboard while the game is paused. This causes a softlock.
 
 ## Intro Videos
