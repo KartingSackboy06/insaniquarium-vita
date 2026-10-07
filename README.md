@@ -33,6 +33,7 @@ Plays the PopCap (and optional SOE) intro videos on launch. The first line of `l
 | Vita | Game |
 |---|---|
 | Touch screen | mouse pointer / left click |
+| Rear touch | mouse pointer / left click |
 | Cross | right mouse button (at the last pointer position) |
 | Triangle | Presto menu (same as right-clicking Presto; shows the cool-down message if it is still active) |
 | Start | Space (pause) |
