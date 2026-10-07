@@ -24,7 +24,7 @@ Plays the PopCap (and optional SOE) intro videos on launch. The first line of `l
   - On PC the path is: 'C:\Program Files (x86)\Steam\steamapps\common\Insaniquarium Deluxe'
 - Copy the folder to your PS Vita using a FTP or USB transfer into 'ux0:data/'
 - Rename the folder to 'insaniquarium'
-  - Note: not all of files are required, but the total size is 13.7MB so it's convenient to copy it all.
+  - Note: not all the files are required, but the total size is 13.7MB so it's convenient to copy it all.
 - Have fun! The game will play at 36 fps without overclocking.
 
 
