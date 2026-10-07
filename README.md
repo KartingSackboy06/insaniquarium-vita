@@ -6,7 +6,7 @@ Loads the Android `libmain.so` (armeabi-v7a) of Insaniquarium directly on a PS V
 relocates it against Vita-side replacements for libc/SDL/GL, runs its C++ constructors and calls `SDL_main`.
 Plays the PopCap (and optional SOE) intro videos on launch. The first line of `log.txt` shows the loader version.
 
-Credit to [kyle-sylvestre](https://github.com/kyle-sylvestre/WinFish) for the Android version of the game, which is a fork off of Vindirect's original [WinFin](https://github.com/Vindirect/WinFish) decompilation. This build acts as a loader for the libmain.so library from the Android v0.1 release, adding custom button mappings. Future bug fix development for the PlayStation Vita version of the game will be separate to keep code/asset files as efficient as possible. Credit to [rinnegatamante](https://github.com/rinnegatamante/vitagl) for creating vitaGL.
+Credit to [kyle-sylvestre](https://github.com/kyle-sylvestre/WinFish) for the Android version of the game, which is a fork off of Vindirect's original [WinFin](https://github.com/Vindirect/WinFish) decompilation. This build acts as a loader for the libmain.so library from the Android v0.1 release, adding custom button mappings. Future bug fix development for the PlayStation Vita version of the game will be separate to keep code/asset files as efficient as possible. Credit to [rinnegatamante](https://github.com/rinnegatamante/vitagl) for vitaGL.
 
 This repository contains **no game files**. You need your own copy of the game.
 
