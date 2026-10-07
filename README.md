@@ -38,7 +38,7 @@ This repository contains **no game files**. You need your own copy of the game.
 | SQUARE | Bubbles!!! Linked to "B" |
 | TRIANGLE | Opens the Presto Change-O menu. (Functions the same as as right-clicking Presto on PC) |
 | CIRCLE | A basic navigation/back button. |
-| L/R | Cycle through menu/help/story pages. |
+| L/R BUTTONS | Cycle through menu/help/story pages. |
 | START | Pauses the game. Linked to "space" |
 | D-PAD UP | Hold down to open the keyboard. (Hold for at least 1500ms) |
 | CHEATS | Enter with ALL LOWERCASE letters using the keyboard. |
