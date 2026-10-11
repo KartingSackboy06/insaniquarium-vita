@@ -31,6 +31,7 @@
 #include <psp2/common_dialog.h>
 #include <psp2/message_dialog.h>
 #include <psp2/ctrl.h>
+#include <psp2/touch.h>
 #include <psp2/kernel/threadmgr.h>
 #include "common.h"
 #include "so_util.h"
@@ -1073,7 +1074,9 @@ static void circle_back(void) {
         }
     }
     int left = *(int *)(app + 0x2cc);
-    if (left == 0 || help_over) {                  /* no dialog (or only Options behind Help): Help / level / pet / ... screens */
+    /* Screens are only handled when no dialog was open when Circle was pressed (or only Options behind Help). If a
+     * dialog was just cancelled above, that is this press's action; the screen's button needs another press. */
+    if (count == 0 || help_over) {                 /* no dialog (or only Options behind Help): Help / level / pet / ... screens */
         uint8_t *wm = *(uint8_t **)(app + 0x2c0);
         uint8_t *help = *(uint8_t **)(app + 0x6c0), *tank = *(uint8_t **)(app + 0x6b8), *pets = *(uint8_t **)(app + 0x698);
         uint8_t *story = *(uint8_t **)(app + 0x6ac), *store = *(uint8_t **)(app + 0x69c), *hs = *(uint8_t **)(app + 0x6bc);
@@ -1168,6 +1171,56 @@ static void help_page(int next) {
     }
 }
 
+/* Rear touchpad: in a level (or the virtual tank) a rear touch above the tank is moved down to the top edge of the tank,
+ * so it can no longer press the shop / pet / button bar by accident but still acts as a normal tap there. The bar ends at
+ * about y = 68 in the game's 640x480 coordinates (its buttons at about 62) and the water starts at about 70; touches
+ * above REAR_TOP_LIMIT are treated as if they were at REAR_TOP_LIMIT. Only applies while the game board is showing with
+ * no dialog and none of the full screens (store, pets, tank setup, fish setup, help, ...) open; the front touch screen
+ * is never changed. Both the mouse events SDL makes from touches (motion / button-down) and the raw finger events
+ * (down / motion) are adjusted, since the game may listen to either. Event positions are converted to game coordinates
+ * with the same letterbox the game uses (uniform scale, centred), which is the identity for a 640x480 window.
+ * Game thread only. */
+#define REAR_TOP_LIMIT 66
+extern void SDL_GetWindowSize(void *window, int *w, int *h);
+static int tank_on_top(void) {
+    static void **p_app;
+    if (!p_app) p_app = (void **)so_sym("_ZN4Sexy8gSexyAppE");
+    if (!p_app || !*p_app) return 0;
+    uint8_t *app = (uint8_t *)*p_app;
+    uint8_t *board = *(uint8_t **)(app + 0x604);
+    if (!board || !*(uint8_t **)(app + 0x2c0) || *(int *)(app + 0x2cc) != 0) return 0;   /* no board, or a dialog is open */
+    static const int screens[] = { 0x6c0 /* help */, 0x6b8 /* tank */, 0x698 /* pets */, 0x6ac /* story */,
+                                   0x69c /* store */, 0x6bc /* high scores */, 0x6b0 /* tank setup */, 0x6b4 /* fish setup */ };
+    for (unsigned i = 0; i < sizeof screens / sizeof screens[0]; i++) {
+        uint8_t *w = *(uint8_t **)(app + screens[i]);
+        if (w && widget_listed(app, w)) return 0;                  /* a full screen is showing */
+    }
+    return 1;
+}
+static void rear_tap_clamp(uint8_t *e) {
+    uint32_t t = *(const uint32_t *)e;
+    int is_mouse = (t == SDL_MOUSEMOTION_T || t == SDL_MOUSEBUTTONDOWN_T);
+    int is_finger = (t == 0x700u || t == 0x702u);                  /* SDL_FINGERDOWN / SDL_FINGERMOTION */
+    if (!is_mouse && !is_finger) return;
+    SceTouchData rear, front;
+    if (sceTouchPeek(SCE_TOUCH_PORT_BACK, &rear, 1) <= 0 || rear.reportNum == 0) return;
+    if (sceTouchPeek(SCE_TOUCH_PORT_FRONT, &front, 1) > 0 && front.reportNum > 0) return;   /* the front screen is in use */
+    int w = 640, h = 480;
+    if (g_window) SDL_GetWindowSize(g_window, &w, &h);
+    if (w <= 0 || h <= 0) { w = 640; h = 480; }
+    float ypix = is_mouse ? (float)*(const int32_t *)(e + 24) : *(const float *)(e + 28) * (float)h;   /* finger y is 0..1 */
+    float sx = (float)w / 640.0f, sy = (float)h / 480.0f, sc = sx < sy ? sx : sy, offy = ((float)h - 480.0f * sc) * 0.5f;
+    float gy = (ypix - offy) / sc;
+    if (gy >= (float)REAR_TOP_LIMIT) return;
+    int top = tank_on_top();
+    { static int n; if (top && n < 40) { n++; DLOG("rear touch: ev=0x%x y=%d (window %dx%d) game_y=%d -> %s", t, (int)ypix, w, h, (int)gy,
+                                                   "moved to the tank edge"); } }
+    if (!top) return;
+    float ny = (float)REAR_TOP_LIMIT * sc + offy;                  /* the limit, back in window pixels */
+    if (is_mouse) *(int32_t *)(e + 24) = (int32_t)(ny + 0.5f);
+    else          *(float *)(e + 28) = ny / (float)h;
+}
+
 int ov_SDL_PollEvent(void *ev) {
     uint8_t *e = ev;
     g_poll_stamp = sceKernelGetProcessTimeWide();
@@ -1200,6 +1253,7 @@ int ov_SDL_PollEvent(void *ev) {
     }
     for (;;) {
         int r = SDL_PollEvent(ev);
+        if (r) rear_tap_clamp(e);                    /* rear touch above the tank: moved to the tank edge */
         if (r) track_mouse(e);
         if (r && g_cheat_wait && *(uint32_t *)e == 0x303 /* SDL_TEXTINPUT */) {
             char text[64]; snprintf(text, sizeof text, "%s", (const char *)e + 12);
